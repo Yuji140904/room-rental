@@ -58,7 +58,7 @@ class User extends Authenticatable
         return $this->role === 'tenant';
     }
     public function tenants(): HasMany
-{
+    {
     return $this->hasMany(Tenant::class);
-}
+    }
 }

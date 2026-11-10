@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\TenantController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -30,6 +31,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::view('/', 'admin.dashboard')->name('dashboard');
     Route::resource('rooms', RoomController::class)->except(['show', 'destroy']);
+    });
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::resource('rooms', RoomController::class)->except(['show', 'destroy']);
+    Route::resource('tenants', TenantController::class)->only(['index', 'create', 'store']);
+    Route::patch('tenants/{tenant}/move-out', [TenantController::class, 'moveOut'])->name('tenants.move-out');
     });
 });
 

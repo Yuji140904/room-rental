@@ -28,7 +28,6 @@ return new class extends Migration
         $table->unique(['room_id', 'month']);
     });
 }
-
     /**
      * Reverse the migrations.
      */
