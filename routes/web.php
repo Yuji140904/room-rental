@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoomController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -24,6 +25,11 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('role:tenant')->prefix('tenant')->name('tenant.')->group(function () {
         Route::view('/', 'tenant.dashboard')->name('dashboard');
+    });
+
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::resource('rooms', RoomController::class)->except(['show', 'destroy']);
     });
 });
 
