@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\Bill;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class BillPolicy
 {
@@ -13,9 +12,10 @@ class BillPolicy
      */
     public function viewAny(User $user): bool
     {
-        if($user->isAdmin()) {
+        if ($user->isAdmin()) {
             return true;
         }
+
         return false;
     }
 
@@ -24,9 +24,10 @@ class BillPolicy
      */
     public function view(User $user, Bill $bill): bool
     {
-        if($user->isAdmin()) {
+        if ($user->isAdmin()) {
             return true;
         }
+
         return $bill->tenant !== null && $bill->tenant->user_id === $user->id;
     }
 

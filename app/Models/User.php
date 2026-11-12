@@ -5,9 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -49,16 +49,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin():bool
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
-    public function isTenant():bool
+
+    public function isTenant(): bool
     {
         return $this->role === 'tenant';
     }
+
     public function tenants(): HasMany
     {
-    return $this->hasMany(Tenant::class);
+        return $this->hasMany(Tenant::class);
     }
 }
