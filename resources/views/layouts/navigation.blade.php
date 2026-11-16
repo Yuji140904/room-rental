@@ -28,6 +28,10 @@
                         <x-nav-link :href="route('admin.billing.index')" :active="request()->routeIs('admin.billing.*')">
                             {{ __('Billing') }}
                         </x-nav-link>
+
+                        <x-nav-link :href="route('admin.bills.index')" :active="request()->routeIs('admin.bills.*')">
+                            {{ __('Bills') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -96,6 +100,9 @@
 
                 <x-responsive-nav-link :href="route('admin.billing.index')" :active="request()->routeIs('admin.billing.*')">
                     {{ __('Billing') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.bills.index')" :active="request()->routeIs('admin.bills.*')">
+                     {{ __('Bills') }}
                 </x-responsive-nav-link>
             @endif
         </div>

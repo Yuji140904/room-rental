@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Tenant\BillController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BillListController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,12 +30,16 @@ Route::middleware('auth')->group(function () {
         Route::patch('tenants/{tenant}/move-out', [TenantController::class, 'moveOut'])->name('tenants.move-out');
         Route::get('billing', [BillingController::class, 'index'])->name('billing.index');
         Route::post('billing', [BillingController::class, 'store'])->name('billing.store');
+        Route::get('bills', [BillListController::class, 'index'])->name('bills.index');
+        Route::patch('bills/{bill}/paid', [BillListController::class, 'markPaid'])->name('bills.paid');
+        Route::patch('bills/{bill}/unpaid', [BillListController::class, 'markUnpaid'])->name('bills.unpaid');
     });
 
     Route::middleware('role:tenant')->prefix('tenant')->name('tenant.')->group(function () {
         Route::view('/', 'tenant.dashboard')->name('dashboard');
         Route::get('bills/{bill}', [BillController::class, 'show'])->name('bills.show');
     });
+
 });
 
 require __DIR__.'/auth.php';
