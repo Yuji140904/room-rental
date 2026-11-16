@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TenantController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('rooms', RoomController::class)->except(['show', 'destroy']);
         Route::resource('tenants', TenantController::class)->only(['index', 'create', 'store']);
         Route::patch('tenants/{tenant}/move-out', [TenantController::class, 'moveOut'])->name('tenants.move-out');
+        Route::get('billing', [BillingController::class, 'index'])->name('billing.index');
+        Route::post('billing', [BillingController::class, 'store'])->name('billing.store');
     });
 
     Route::middleware('role:tenant')->prefix('tenant')->name('tenant.')->group(function () {
