@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Tenant\BillController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\BillListController;
+use App\Http\Controllers\Tenant\DashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:tenant')->prefix('tenant')->name('tenant.')->group(function () {
-        Route::view('/', 'tenant.dashboard')->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('bills/{bill}', [BillController::class, 'show'])->name('bills.show');
     });
 
