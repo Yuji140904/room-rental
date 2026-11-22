@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\BillingController;
+use App\Http\Controllers\Admin\BillListController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\TenantController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Tenant\BillController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\BillListController;
 use App\Http\Controllers\Tenant\DashboardController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/lang/{locale}', LocaleController::class)->name('locale');
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -21,8 +24,6 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::view('/', 'admin.dashboard')->name('dashboard');
@@ -40,7 +41,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::get('bills/{bill}', [BillController::class, 'show'])->name('bills.show');
     });
-
 });
 
 require __DIR__.'/auth.php';
